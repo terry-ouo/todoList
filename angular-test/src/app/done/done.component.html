@@ -1,0 +1,14 @@
+<h1 class="text-3xl font-bold underline">{{ title }}</h1>
+<ul>
+  <li *ngFor="let item of itemFinished; let i = index">
+    <div class="flex ... bg-[#c2e7d9] ... rounded-md">
+      <div class="w-4/6 ...">
+        <span>{{ item.describe }}</span>
+      </div>
+      <div class="w-2/6 ...">
+        <button (click)="delete(i)">刪除/</button>
+        <button (click)="undo(i)">未完成</button>
+      </div>
+    </div>
+  </li>
+</ul>

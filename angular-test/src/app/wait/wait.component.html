@@ -1,0 +1,26 @@
+<h1 class="text-3xl font-bold underline">{{ title }}</h1>
+<ul>
+  <li *ngFor="let item of items; let i = index; trackBy: trackByIndex">
+    <!-- 顯示待辦項目 -->
+    <div class="flex ... bg-[#c2e7d9] ... rounded-md">
+      <div class="w-4/6 ...">
+        <input
+          *ngIf="isEditing && editIndex === i"
+          [(ngModel)]="items[i].describe"
+          (blur)="onBlur()"
+        />
+        <span *ngIf="!isEditing || editIndex !== i">{{
+          items[i].describe
+        }}</span>
+      </div>
+
+      <div class="w-2/6 ...">
+        <!-- 編輯按鈕，點擊後進入編輯模式 -->
+        <button (click)="enterEditMode(i, items[i])">編輯/</button>
+
+        <button (click)="addFinishedItem(i)">完成/</button>
+        <button (click)="delete(items[i].id)">刪除</button>
+      </div>
+    </div>
+  </li>
+</ul>
