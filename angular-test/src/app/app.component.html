@@ -2,15 +2,16 @@
   <!-- ... -->
   <h1 class="text-3xl font-bold underline">{{ title }}</h1>
 
-  <app-add (itemAdded)="handleNewItem($event)"></app-add>
+  <app-add [waitingItem]="items" (itemAdded)="handleNewItem($event)"></app-add>
   <!-- 傳遞事件 -->
   <app-wait
-    [items]="items"
+    [(items)]="items"
     (itemFinished)="handleItemFinished($event)"
   ></app-wait>
   <!-- 傳遞資料給 WaitComponent -->
   <app-done
-    [itemFinished]="itemFinished"
+    [(itemFinished)]="itemFinished"
+    [waitingItem]="items"
     (itemAdded)="handleNewItem($event)"
   ></app-done>
 </div>

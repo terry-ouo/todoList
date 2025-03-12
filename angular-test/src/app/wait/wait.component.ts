@@ -1,7 +1,7 @@
+import { Item } from './../item';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Item } from '../item';
 import { ItemServiceService } from '../item-service.service';
 
 @Component({
@@ -17,16 +17,20 @@ export class WaitComponent implements OnInit {
 
   constructor(private service: ItemServiceService) {}
 
-  @Input() items: Item[] = [];
+  @Input() items!: Item[];
+  @Output() itemsChange = new EventEmitter<Item[]>();//將陣列與父元件同步
   @Output() itemFinished = new EventEmitter<Item>();
 
   ngOnInit(): void {
     console.log('ngOnInit');
   }
-  delete(index: number) {
+  /*delete(index: number) {
     this.items = this.items.splice(index, 1); // 刪除指定索引的項目
+  }*/
+  delete(item:Item){
+    this.items = this.items.filter(data => data.id !== item.id);
+    this.itemsChange.emit(this.items);
   }
-
   // 進入編輯模式
   enterEditMode(index: number, item: any) {
     console.log(item);
@@ -39,13 +43,14 @@ export class WaitComponent implements OnInit {
     this.isEditing = false;
     this.editIndex = null; // 退出編輯模式
   }
-  trackByIndex(index: number): number {
-    return index; // 使用索引作為唯一標識符
+  trackByIndex(index: number,item:Item): string {
+    return item.id; // 使用索引作為唯一標識符
   }
 
-  addFinishedItem(index: number) {
-    this.itemFinished.emit(this.items[index]); // 發送新項目到父元件
+  addFinishedItem(item: Item) {
+    this.itemFinished.emit(item); // 發送新項目到父元件
     // this.items.push(this.newItem); // 加入陣列
-    this.items.splice(index, 1);
+    this.items = this.items.filter(data =>data.id!==item.id);
+    this.itemsChange.emit(this.items);
   }
 }

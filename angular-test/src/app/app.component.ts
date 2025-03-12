@@ -21,6 +21,6 @@ export class AppComponent {
   }
 
   handleItemFinished(item: Item) {
-    this.itemFinished.push(item);
+    this.itemFinished = [...this.itemFinished,item];
   }
 }

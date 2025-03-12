@@ -6,20 +6,21 @@
       <div class="w-4/6 ...">
         <input
           *ngIf="isEditing && editIndex === i"
-          [(ngModel)]="items[i].describe"
+          [(ngModel)]="item.describe"
+          (keyup.enter)="onBlur()"
           (blur)="onBlur()"
-        />
+        /><!--新增按下enter也能夠變更-->
         <span *ngIf="!isEditing || editIndex !== i">{{
-          items[i].describe
+          item.describe
         }}</span>
       </div>
 
       <div class="w-2/6 ...">
         <!-- 編輯按鈕，點擊後進入編輯模式 -->
-        <button (click)="enterEditMode(i, items[i])">編輯/</button>
+        <button (click)="enterEditMode(i, items[i])">編輯</button>
 
-        <button (click)="addFinishedItem(i)">完成/</button>
-        <button (click)="delete(items[i].id)">刪除</button>
+        <button (click)="addFinishedItem(item)">完成</button>
+        <button (click)="delete(item)">刪除</button><!--透過ID刪除-->
       </div>
     </div>
   </li>

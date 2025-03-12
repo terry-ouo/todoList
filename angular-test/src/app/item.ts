@@ -1,5 +1,5 @@
 export class Item {
-  id: number = 0;
+  id: string = "";
   describe: string = '';
   status: string = '';
 }
